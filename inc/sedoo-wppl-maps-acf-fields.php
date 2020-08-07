@@ -196,6 +196,30 @@ if( function_exists('acf_add_local_field_group') ):
                 'return_format' => 'value',
                 'placeholder' => '',
             ),
+            array(
+                'key' => 'field_5f2bfd6ddc609',
+                'label' => 'Exclusion de contenus',
+                'name' => 'exclusion_de_contenus',
+                'type' => 'relationship',
+                'instructions' => 'Selectionnez les contenus que vous souhaitez exclure de la carte',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'post_type' => '',
+                'taxonomy' => '',
+                'filters' => array(
+                    0 => 'search',
+                    1 => 'post_type',
+                ),
+                'elements' => '',
+                'min' => '',
+                'max' => '',
+                'return_format' => 'id',
+            ),
         ),
         'location' => array(
             array(

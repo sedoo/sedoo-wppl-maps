@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Sedoo - Maps
  * Description:  Affiche une carte interactive
- * Version: 0.0.1
+ * Version: 0.1
  * Author: Nicolas Gruwe  - SEDOO DATA CENTER
  * Author URI:      https://www.sedoo.fr 
  * GitHub Plugin URI: sedoo/sedoo-wppl-maps
@@ -64,17 +64,17 @@ if ( ! function_exists('get_field') ) {
 
 	function sedoo_maps_style() {
 		wp_register_style( 'sedoo_maps_css', plugins_url('css/maps.css', __FILE__) );
-		wp_register_style( 'sedoo_maps_ol_css', plugins_url('css/ol.css', __FILE__) );
-		wp_enqueue_style( 'sedoo_maps_css' );		
-		wp_enqueue_style( 'sedoo_maps_ol_css' );
+	 //	wp_register_style( 'sedoo_maps_ol_css', plugins_url('css/ol.css', __FILE__) );
+	 	wp_enqueue_style( 'sedoo_maps_css' );		
+	 //	wp_enqueue_style( 'sedoo_maps_ol_css' );
 
-	}
-	add_action( 'init', 'sedoo_maps_style' );
+	 }
+	 add_action( 'init', 'sedoo_maps_style' );
 
 
-	function sedoo_maps_script() {
-		$src_ctp = plugins_url('js/ol.js', __FILE__);
-		wp_enqueue_script('sedoo_maps_js', $src_ctp,  array ( 'jquery' ));                    
-	}
-	add_action( 'init', 'sedoo_maps_script' );
+	// function sedoo_maps_script() {
+	// 	$src_ctp = plugins_url('js/ol.js', __FILE__);
+	// 	wp_enqueue_script('sedoo_maps_js', $src_ctp,  array ( 'jquery' ));                    
+	// }
+	// add_action( 'init', 'sedoo_maps_script' );
 }
