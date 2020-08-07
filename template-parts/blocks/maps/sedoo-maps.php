@@ -1,101 +1,99 @@
-<div class="sedoo_ol_maps">
-    <div id="map" class="map"></div>
-    <div id="popup" class="ol-popup">
-        <a href="#" id="popup-closer" class="ol-popup-closer"></a>
-        <div id="popup-content"></div>
-    </div>
-</div>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="  crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
 
-<script type="text/javascript">
-    var map = new ol.Map({
-        target: 'map',
-        layers: [
-            new ol.layer.Tile({
-            source: new ol.source.OSM()
-            })
-        ],
-        view: new ol.View({
-            center: ol.proj.fromLonLat([37.41, 8.82]),
-            zoom: 4
-        })
-    });
-    var container = document.getElementById('popup');
-    var content = document.getElementById('popup-content');
-    var closer = document.getElementById('popup-closer');
+<div id="mapid"></div>
 
-    //////////////
-    /// ADD MARKER
-    ///////////
-    var overlay = new ol.Overlay({
-        element: container,
-        autoPan: true,
-        autoPanAnimation: {
-            duration: 250
-        }
-    });
-    map.addOverlay(overlay);
+<script>
 
-    closer.onclick = function() {
-        overlay.setPosition(undefined);
-        closer.blur();
-        return false;
-    };
+
+    // url used to query objects 
+	var mbAttr = 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+			'<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>';
+    var mburl =  'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZ25pY29sYXMzMSIsImEiOiJja2RpbTBteDkwNmRqMnJvaGM3Z2tncXRnIn0.yVz4MD1Jt_gJmHGNfM-Wbw';
+
+
+    // empty array of future associative layers to title
+    var layers = new Array();
 </script>
 
 <?php 
+
+    $exclusions = 0;
+    $exclusions = get_field('exclusion_de_contenus');
+    $exclusions_list = implode(",", $exclusions);
     $array_of_post_Type_for_geoloc;
     if(get_field('types_de_contenus_a_afficher')) {
         $t = get_field('types_de_contenus_a_afficher');
         foreach($t as $postttype) {
-            $array_of_post_Type_for_geoloc[] = $postttype;
+            $items = new WP_Query(array(
+                'post_type' => $postttype,
+                'numberposts' => -1,
+                'post__not_in' => array($exclusions_list),
+                'post_status' => 'publish'
+                )
+            );
+            $postType = get_post_type_object($postttype);
+            $postType = $postType->labels->singular_name; // human readable post type label
+            ?>
+            <script>
+                var nom_layer = <?php echo json_encode($postType) ?> ;
+            	var <?php echo $postttype; ?> = L.layerGroup();
+                layers.push([<?php echo $postttype; ?>, nom_layer]);
+            </script>
+            <?php 
+            if ( $items->have_posts() ) : 
+                while ( $items->have_posts() ) : $items->the_post();
+                    if(get_field('geolocalisation_yesno', get_the_ID()) == true) {
+
+                        $lat = get_field('latitude', get_the_ID());                
+                        $lon = get_field('longitude', get_the_ID());
+                        $titre = get_the_title();
+            ?>
+                        <script>
+                            L.marker([<?php echo $lon; ?>, <?php echo $lat; ?>]).bindPopup("<h2><?php the_title(); ?></h2><span> - "+nom_layer+" </span><a href='<?php the_permalink(); ?>'>Voir plus</a>").addTo(<?php echo $postttype; ?>); // add marker to his post type layer
+                        </script>          
+            <?php 
+                    }
+                endwhile;
+            ?> 
+            <?php 
+            endif; 
+            wp_reset_query();
         }
     }
-    $items = new WP_Query(array(
-		'post_type' => $array_of_post_Type_for_geoloc,
-		'numberposts' => -1,
-		'post_status' => 'publish'
-		)
-    );
-    if ( $items->have_posts() ) : 
-        while ( $items->have_posts() ) : $items->the_post();
-            if(get_field('geolocalisation_yesno', get_the_ID()) == true) {
-                $lat = get_field('latitude', get_the_ID());                
-                $lon = get_field('longitude', get_the_ID());
-                $titre = get_the_title();
-                ?>
-                <script>
-                    //////////////
-                    /// ADD MARKER
-                    ///////////
-                    var layer = new ol.layer.Vector({
-                    source: new ol.source.Vector({
-                        features: [
-                            new ol.Feature({
-                                geometry: new ol.geom.Point(ol.proj.fromLonLat([<?php echo json_encode($lon) ?>, <?php echo json_encode($lat) ?>]))
-                            })
-                        ]
-                    })
-                    });
-                    map.addLayer(layer);
+   
+?>                
+<script>
 
-                    //////////////
-                    /// ON CLICK DISPLAY POPUP
-                    ///////////
-                    map.on('singleclick', function (event) {
-                        if (map.hasFeatureAtPixel(event.pixel) === true) {
-                            var coordinate = event.coordinate;
+    var layers_list = new Array(); // the list of default displayed layers
+    var layers_corresp = new Array(); // list of layers title to layers content relation
 
-                            content.innerHTML = '<b><?php echo json_encode($titre) ?></b><br />I am a popup.';
-                            overlay.setPosition(coordinate);
-                        } else {
-                            overlay.setPosition(undefined);
-                            closer.blur();
-                        }
-                    });
-                </script>
-                <?php 
-            }
-        endwhile; 
-    endif; 
-    wp_reset_query();
-?>
+
+    var overlays = {}; // overlay of marker, one layer for one post type
+    
+
+    for (var i = 0; i < layers.length; i++) {
+            layers_list.push(layers[i][0]); // default displayed layers
+            overlays[layers[i][1]] = layers[i][0];
+    }
+
+
+    var grayscale   = L.tileLayer(mburl, {id: 'mapbox/light-v9', tileSize: 512, zoomOffset: -1, attribution: mbAttr}), // the two ground display options
+    streets  = L.tileLayer(mburl, {id: 'mapbox/streets-v11', tileSize: 512, zoomOffset: -1, attribution: mbAttr});     //
+
+    layers_list.push(grayscale);
+
+    var map = L.map('mapid', {
+        center: [39.73, -104.99],
+        zoom: 10,
+        layers: layers_list
+    });
+
+    var baseLayers = {
+        "Grayscale": grayscale,
+        "Streets": streets
+    };
+
+    L.control.layers(baseLayers, overlays).addTo(map);
+</script>

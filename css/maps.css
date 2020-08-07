@@ -1,9 +1,1 @@
-.sedoo_ol_maps .map {
-    height: 400px;
-    width: 100%;
-}
-.sedoo_ol_maps #popup-content {
-    background: rgba(255, 255, 255, 0.8);
-    padding: 10px;
-    border-radius: 5px;
-}
+#mapid { height: 400px; }
