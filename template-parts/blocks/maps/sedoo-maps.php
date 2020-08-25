@@ -15,6 +15,7 @@
 
     // empty array of future associative layers to title
     var layers = new Array();
+    var markerArray = [];
 </script>
 
 <?php 
@@ -51,7 +52,7 @@
                         $titre = get_the_title();
             ?>
                         <script>
-                            L.marker([<?php echo $lon; ?>, <?php echo $lat; ?>]).bindPopup("<h2><?php the_title(); ?></h2><span> - "+nom_layer+" </span><a href='<?php the_permalink(); ?>'>Voir plus</a>").addTo(<?php echo $postttype; ?>); // add marker to his post type layer
+                            markerArray.push(L.marker([<?php echo $lat; ?>, <?php echo $lon; ?>]).bindPopup("<h3><?php echo ucfirst(get_the_title()); ?></h3><a href='<?php the_permalink(); ?>'>Voir plus</a>").addTo(<?php echo $postttype; ?>)); // add marker to his post type layer
                         </script>          
             <?php 
                     }
@@ -94,6 +95,7 @@
         "Grayscale": grayscale,
         "Streets": streets
     };
-
+    var group = L.featureGroup(markerArray).addTo(map);
+    map.fitBounds(group.getBounds());
     L.control.layers(baseLayers, overlays).addTo(map);
 </script>
