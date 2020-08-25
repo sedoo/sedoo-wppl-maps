@@ -46,13 +46,14 @@
             if ( $items->have_posts() ) : 
                 while ( $items->have_posts() ) : $items->the_post();
                     if(get_field('geolocalisation_yesno', get_the_ID()) == true) {
-
+                        
+                        $infobulle = get_field('contenu_infobulle', get_the_ID());   
                         $lat = get_field('latitude', get_the_ID());                
                         $lon = get_field('longitude', get_the_ID());
                         $titre = get_the_title();
             ?>
                         <script>
-                            markerArray.push(L.marker([<?php echo $lat; ?>, <?php echo $lon; ?>]).bindPopup("<h3><?php echo ucfirst(get_the_title()); ?></h3><a href='<?php the_permalink(); ?>'>Voir plus</a>").addTo(<?php echo $postttype; ?>)); // add marker to his post type layer
+                            markerArray.push(L.marker([<?php echo $lat; ?>, <?php echo $lon; ?>]).bindPopup("<h3><?php echo ucfirst(get_the_title()); ?></h3><p><?php echo $infobulle; ?></p><a href='<?php the_permalink(); ?>'>Voir plus</a>").addTo(<?php echo $postttype; ?>)); // add marker to his post type layer
                         </script>          
             <?php 
                     }
