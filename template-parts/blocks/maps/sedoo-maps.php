@@ -87,8 +87,8 @@
     layers_list.push(grayscale);
 
     var map = L.map('mapid', {
-        center: [39.73, -104.99],
-        zoom: 10,
+        center: [48.8534, 2.3488],
+        zoom: 7,
         layers: layers_list
     });
 
@@ -96,7 +96,7 @@
         "Grayscale": grayscale,
         "Streets": streets
     };
-    var group = L.featureGroup(markerArray).addTo(map);
-    map.fitBounds(group.getBounds());
+   // var group = L.featureGroup(markerArray).addTo(map);
+   // map.fitBounds(group.getBounds());
     L.control.layers(baseLayers, overlays).addTo(map);
 </script>
