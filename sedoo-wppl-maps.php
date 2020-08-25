@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Sedoo - Maps
  * Description:  Affiche une carte interactive
- * Version: 0.1
+ * Version: 0.1.1
  * Author: Nicolas Gruwe  - SEDOO DATA CENTER
  * Author URI:      https://www.sedoo.fr 
  * GitHub Plugin URI: sedoo/sedoo-wppl-maps
