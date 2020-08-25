@@ -102,6 +102,33 @@ if( function_exists('acf_add_local_field_group') ):
                 'max' => '',
                 'step' => '',
             ),
+            array(
+                'key' => 'field_5f44fa3a7c0df',
+                'label' => 'Contenu Infobulle',
+                'name' => 'contenu_infobulle',
+                'type' => 'text',
+                'instructions' => 'Contenu de l\'infobulle disponible au clic sur le marqueur',
+                'required' => 0,
+                'conditional_logic' => array(
+                    array(
+                        array(
+                            'field' => 'field_5f199245270ca',
+                            'operator' => '==',
+                            'value' => '1',
+                        ),
+                    ),
+                ),
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'default_value' => '',
+                'placeholder' => '',
+                'prepend' => '',
+                'append' => '',
+                'maxlength' => '',
+            ),
         ),
         'location' => $post_type_for_geoloc,
         'menu_order' => 0,
