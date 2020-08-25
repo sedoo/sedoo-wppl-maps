@@ -39,7 +39,7 @@
             ?>
             <script>
                 var nom_layer = <?php echo json_encode($postType) ?> ;
-            	var <?php echo json_encode($postType); ?> = L.layerGroup();
+            	var <?php echo $postType; ?> = L.layerGroup();
                 layers.push([<?php echo $postttype; ?>, nom_layer]);
             </script>
             <?php 
