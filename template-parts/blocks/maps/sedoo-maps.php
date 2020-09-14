@@ -40,7 +40,7 @@
             <script>
                 var nom_layer = <?php echo json_encode($postType) ?> ;
             	var <?php echo $postType; ?> = L.layerGroup();
-                layers.push([<?php echo $postttype; ?>, nom_layer]);
+                layers.push([<?php echo $postType; ?>, nom_layer]);
             </script>
             <?php 
             if ( $items->have_posts() ) : 
@@ -53,7 +53,7 @@
                         $titre = get_the_title();
             ?>
                         <script>
-                            markerArray.push(L.marker([<?php echo $lat; ?>, <?php echo $lon; ?>]).bindPopup("<h3><?php echo ucfirst(get_the_title()); ?></h3><p><?php echo $infobulle; ?></p><a href='<?php the_permalink(); ?>'>Voir plus</a>").addTo(<?php echo $postttype; ?>)); // add marker to his post type layer
+                            markerArray.push(L.marker([<?php echo $lat; ?>, <?php echo $lon; ?>]).bindPopup("<h3><?php echo ucfirst(get_the_title()); ?></h3><p><?php echo $infobulle; ?></p><a href='<?php the_permalink(); ?>'>Voir plus</a>").addTo(<?php echo $postType; ?>)); // add marker to his post type layer
                         </script>          
             <?php 
                     }
