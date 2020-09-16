@@ -97,6 +97,8 @@
         "Streets": streets
     };
     var group = L.featureGroup(markerArray).addTo(map);
-    map.fitBounds(group.getBounds(), {padding: L.point(20, 20)});
+    if(group.getBounds()) {
+        map.fitBounds(group.getBounds(), {padding: L.point(20, 20)});
+    }
     L.control.layers(baseLayers, overlays).addTo(map);
 </script>
