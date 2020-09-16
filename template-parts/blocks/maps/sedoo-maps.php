@@ -15,6 +15,7 @@
     // empty array of future associative layers to title
     var layers = new Array();
     var markerArray = [];
+
 </script>
 
 <?php 
@@ -95,8 +96,9 @@
         "Streets": streets
     };
     var group = L.featureGroup(markerArray).addTo(map);
-    if(jQuery.isEmptyObject(group.getBounds())) {
-        console.log(group.getBounds());
+    console.log(group.getBounds());
+    if(jQuery.isEmptyObject(group.getBounds())) {}
+    else {
         map.fitBounds(group.getBounds(), {padding: L.point(20, 20)});
     }
     L.control.layers(baseLayers, overlays).addTo(map);

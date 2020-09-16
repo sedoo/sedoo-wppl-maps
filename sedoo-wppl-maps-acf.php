@@ -10,8 +10,8 @@ function register_sedoo_maps_block_types() {
         'render_callback'   => 'sedoo_blocks_maps_render_callback',
         'enqueue_style'     => plugin_dir_url( __FILE__ ) . 'css/maps.css',
         'category'          => 'sedoo-block-category',
-        'icon'              => 'media-text',
-        'keywords'          => array( 'maps', 'sedoo' ),
+        'icon'              => 'location-alt',
+        'keywords'          => array( 'maps','carte', 'sedoo' ),
     ));
 }
 
