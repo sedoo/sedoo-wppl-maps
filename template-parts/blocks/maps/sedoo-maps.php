@@ -30,6 +30,7 @@
             $items = new WP_Query(array(
                 'post_type' => $postttype,
                 'numberposts' => -1,
+                "posts_per_page" => -1,
                 'post__not_in' => array($exclusions_list),
                 'post_status' => 'publish'
                 )
