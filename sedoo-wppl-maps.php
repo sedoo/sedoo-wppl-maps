@@ -72,9 +72,12 @@ if ( ! function_exists('get_field') ) {
 	 add_action( 'init', 'sedoo_maps_style' );
 
 
-	// function sedoo_maps_script() {
-	// 	$src_ctp = plugins_url('js/ol.js', __FILE__);
-	// 	wp_enqueue_script('sedoo_maps_js', $src_ctp,  array ( 'jquery' ));                    
-	// }
-	// add_action( 'init', 'sedoo_maps_script' );
+	 function sedoo_map_js() {
+		// le fichier js qui contient les fonctions tirgger au change des select
+		$scrpt_map =  'https://unpkg.com/leaflet@1.6.0/dist/leaflet.js';
+		wp_enqueue_script('sedoo_map_front', $scrpt_map,  array ( 'jquery' ));   
+	  }
+	  add_action( 'init', 'sedoo_map_js' );
+	  add_action( 'admin_head', 'sedoo_map_js' );
+
 }
