@@ -64,20 +64,26 @@ if ( ! function_exists('get_field') ) {
 
 	function sedoo_maps_style() {
 		wp_register_style( 'sedoo_maps_css', plugins_url('css/maps.css', __FILE__) );
-	 //	wp_register_style( 'sedoo_maps_ol_css', plugins_url('css/ol.css', __FILE__) );
 	 	wp_enqueue_style( 'sedoo_maps_css' );		
-	 //	wp_enqueue_style( 'sedoo_maps_ol_css' );
+	}
+	add_action( 'init', 'sedoo_maps_style' );
 
-	 }
-	 add_action( 'init', 'sedoo_maps_style' );
+	// find lat and long from adress in backoffice
+	function sedoo_reverselatlongfind_js() {
+		// le fichier js qui contient les fonctions tirgger au change des select 
+		$src_ctp = plugins_url().'/sedoo-wppl-maps/js/back.js';
+		$src_ol = plugins_url().'/sedoo-wppl-maps/js/ol.js';
+		wp_enqueue_script('sedoo_map_back', $src_ctp,  array ( 'jquery' ));
+		wp_enqueue_script('sedoo_map_back', $src_ol,  array ( 'jquery' ));       
+	}
+	add_action( 'admin_head', 'sedoo_reverselatlongfind_js' );
 
-
-	 function sedoo_map_js() {
+	function sedoo_map_js() {
 		// le fichier js qui contient les fonctions tirgger au change des select
 		$scrpt_map =  'https://unpkg.com/leaflet@1.6.0/dist/leaflet.js';
 		wp_enqueue_script('sedoo_map_front', $scrpt_map,  array ( 'jquery' ));   
-	  }
-	  add_action( 'init', 'sedoo_map_js' );
-	  add_action( 'admin_head', 'sedoo_map_js' );
+	}
+	add_action( 'init', 'sedoo_map_js' );
+	add_action( 'admin_head', 'sedoo_map_js' );
 
 }
