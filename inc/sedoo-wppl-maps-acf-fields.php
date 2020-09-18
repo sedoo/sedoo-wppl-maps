@@ -45,6 +45,35 @@ if( function_exists('acf_add_local_field_group') ):
                 'ui_off_text' => '',
             ),
             array(
+                'key' => 'field_5f1973e456ef0',
+                'label' => 'Adresse',
+                'name' => 'adresse_map',
+                'type' => 'text',
+                'instructions' => 'Les coordonnées seront calculées à partir de cette adresse (Rue, Ville, Pays). <br /> Cette adresse sera auto-complétée une fois renseignée',
+                'required' => 0,
+                'conditional_logic' => array(
+                    array(
+                        array(
+                            'field' => 'field_5f199245270ca',
+                            'operator' => '==',
+                            'value' => '1',
+                        ),
+                    ),
+                ),
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'default_value' => '',
+                'placeholder' => '',
+                'prepend' => '',
+                'append' => '',
+                'min' => '',
+                'max' => '',
+                'step' => '',
+            ),
+            array(
                 'key' => 'field_5f1973e600ef0',
                 'label' => 'Latitude',
                 'name' => 'latitude',
@@ -61,7 +90,7 @@ if( function_exists('acf_add_local_field_group') ):
                     ),
                 ),
                 'wrapper' => array(
-                    'width' => '',
+                    'width' => '50',
                     'class' => '',
                     'id' => '',
                 ),
@@ -90,7 +119,7 @@ if( function_exists('acf_add_local_field_group') ):
                     ),
                 ),
                 'wrapper' => array(
-                    'width' => '',
+                    'width' => '50',
                     'class' => '',
                     'id' => '',
                 ),
@@ -107,7 +136,7 @@ if( function_exists('acf_add_local_field_group') ):
                 'label' => 'Contenu Infobulle',
                 'name' => 'contenu_infobulle',
                 'type' => 'text',
-                'instructions' => 'Contenu de l\'infobulle disponible au clic sur le marqueur',
+                'instructions' => 'Contenu de l\'infobulle disponible au clic sur le marqueur, de préférence une très courte description.',
                 'required' => 0,
                 'conditional_logic' => array(
                     array(
@@ -131,8 +160,8 @@ if( function_exists('acf_add_local_field_group') ):
             ),
         ),
         'location' => $post_type_for_geoloc,
-        'menu_order' => 0,
-        'position' => 'side',
+        'menu_order' => 40,
+        'position' => 'normal',
         'style' => 'default',
         'label_placement' => 'top',
         'instruction_placement' => 'label',
