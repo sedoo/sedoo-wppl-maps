@@ -107,9 +107,10 @@
     var group = L.featureGroup(markerArray).addTo(map);
 
     // fitting bounds of the map, to display all marker with the perfect zoom (and 20px of padding)
-    if(jQuery.isEmptyObject(group.getBounds())) {}
+
+    if(jQuery.isEmptyObject(group.getBounds())) {
+        map.fitBounds(group.getBounds(), {padding: L.point(20, 20)});}
     else {
-        map.fitBounds(group.getBounds(), {padding: L.point(20, 20)});
     }
     L.control.layers(baseLayers, overlays).addTo(map);
 </script>
