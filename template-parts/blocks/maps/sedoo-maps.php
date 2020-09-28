@@ -108,6 +108,7 @@
 
     // fitting bounds of the map, to display all marker with the perfect zoom (and 20px of padding)
 
+    console.log(group.getBounds());
     if(layers.length == 0) {
     }
     else {
